@@ -1,21 +1,17 @@
 package com.unicore.customeResponse;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @Author aravinth
@@ -26,6 +22,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "errorCode", "reason", "schemaPath", "timestamp","validationErrors", "data" })
