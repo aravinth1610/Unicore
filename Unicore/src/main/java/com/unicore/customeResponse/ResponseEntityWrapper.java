@@ -1,6 +1,5 @@
 package com.unicore.customeResponse;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -10,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @Author aravinth
@@ -20,6 +20,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
+@ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "status", "message", "data", "errors" })
 public class ResponseEntityWrapper<T> extends DataResponse<T> {

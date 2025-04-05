@@ -1,14 +1,9 @@
 package com.unicore.interceptor;
 
-import java.nio.charset.StandardCharsets;
-import java.util.UUID;
-
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.ContentCachingRequestWrapper;
-import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,30 +14,23 @@ import lombok.extern.slf4j.Slf4j;
 public class Interceptor implements HandlerInterceptor {
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+
 		String clientIpAddress = request.getRemoteAddr();
 		String localIpAddress = request.getLocalAddr();
-		String userId = request.getHeader("X-Request-ID");
-		MDC.put("X-User-ID", userId);
-
-		System.out.println("userId==========="+userId);
-//	      ContentCachingRequestWrapper wrappedRequest = new ContentCachingRequestWrapper(request);
-//	      ContentCachingResponseWrapper wrappedResponse = new ContentCachingResponseWrapper(response);
-	      
-//	       request.setAttribute("wrappedRequest", wrappedRequest);
-//	       request.setAttribute("wrappedResponse", wrappedResponse);
-//
-//	       String requestBody = "";
-//	        try {
-//	            requestBody = new String(wrappedRequest.getContentAsByteArray(), StandardCharsets.UTF_8);
-//	        } catch (Exception ignored) {}
-//
-//	        log.info("[USER] ID: {} - Method: {} - URI: {} - Body: {}", userId, request.getMethod(), request.getRequestURI(), requestBody);
+		String requestUserId = request.getHeader("X-UserID-X");
+		String userId = requestUserId != null ? requestUserId : "unknown";
+		String uniqueId = request.getHeader("X-UUID-X");
 		
-        log.info("[USER] ID: {} - Method: {} - URI: {}", userId, request.getMethod(), request.getRequestURI());
+		MDC.put("X-User-ID", userId);
+		MDC.put("X-UUID-X", uniqueId);
 
-	        return true;
+		System.out.println("userId===========" + userId);
+
+		log.info("[UUID] ID: {} - [USER] ID: {} - IN - ClientIp: {} - LocalIp: {} - Method: {} - URI: {}", uniqueId, userId, clientIpAddress, localIpAddress, request.getMethod(), request.getRequestURI());
+
+		return true;
 	}
 
 	@Override
@@ -51,21 +39,16 @@ public class Interceptor implements HandlerInterceptor {
 	}
 
 	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
-		
-//        ContentCachingResponseWrapper wrappedResponse = (ContentCachingResponseWrapper) request.getAttribute("wrappedResponse");
-//        String responseBody = "";
-//
-//        if (wrappedResponse != null) {
-//            responseBody = new String(wrappedResponse.getContentAsByteArray(), StandardCharsets.UTF_8);
-//            wrappedResponse.copyBodyToResponse();
-//        }
-//
-//        int status = response.getStatus();
-//        log.info("[USER] ID: {} - Status: {} - Body: {}", MDC.get("X-User-ID"), status, responseBody);
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
+			Exception ex) throws Exception {
 
-		MDC.remove("user");
+		String clientIpAddress = request.getRemoteAddr();
+		String localIpAddress = request.getLocalAddr();
+
+		log.info("[UUID] ID: {} - [USER] ID: {} - OUT - ClientIp: {} - LocalIp: {} - Status: {}", MDC.get("X-UUID-X"), MDC.get("X-User-ID"), clientIpAddress, localIpAddress, response.getStatus());
+
+		MDC.remove("X-User-ID");
+		MDC.remove("X-UUID-X");
 		MDC.clear();
 	}
 }

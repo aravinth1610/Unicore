@@ -9,5 +9,5 @@
 /home/aravinth/Applications/Eclipse/EclipseWorkspace/SpringBootWorkspace/Unic/Unicore/src/main/java/com/unicore/customeResponse/ResponseEntityWrapper.java
 /home/aravinth/Applications/Eclipse/EclipseWorkspace/SpringBootWorkspace/Unic/Unicore/src/main/java/com/unicore/exception/SecurityException.java
 /home/aravinth/Applications/Eclipse/EclipseWorkspace/SpringBootWorkspace/Unic/Unicore/src/main/java/com/unicore/interceptor/Interceptor.java
-/home/aravinth/Applications/Eclipse/EclipseWorkspace/SpringBootWorkspace/Unic/Unicore/src/main/java/com/unicore/interceptor/LoggingWebAspect.java
+/home/aravinth/Applications/Eclipse/EclipseWorkspace/SpringBootWorkspace/Unic/Unicore/src/main/java/com/unicore/logger/LoggingWebAspect.java
 /home/aravinth/Applications/Eclipse/EclipseWorkspace/SpringBootWorkspace/Unic/Unicore/src/main/java/com/unicore/utils/MaskingUtil.java
